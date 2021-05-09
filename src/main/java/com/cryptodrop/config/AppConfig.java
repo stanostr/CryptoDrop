@@ -27,10 +27,10 @@ public class AppConfig {
 			@Override
 			public void run(String... args) throws Exception {
 				log.info("Pre-loading triggers.");
-				repo.save(Trigger.builder().id(1).frequency(5).rateChange(1.0).build());
-				repo.save(Trigger.builder().id(2).frequency(10).rateChange(2.0).build());
-				repo.save(Trigger.builder().id(3).frequency(15).rateChange(2.0).build());
-				repo.save(Trigger.builder().id(4).frequency(15).rateChange(5.0).build());
+				repo.save(Trigger.builder().id(1).coin("bitcoin").frequency(5).rateChange(1.0).build());
+				repo.save(Trigger.builder().id(2).coin("bitcoin").frequency(10).rateChange(2.0).build());
+				repo.save(Trigger.builder().id(3).coin("bitcoin").frequency(15).rateChange(2.0).build());
+				repo.save(Trigger.builder().id(4).coin("bitcoin").frequency(15).rateChange(5.0).build());
 			}
 		};
 	}

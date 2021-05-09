@@ -27,6 +27,9 @@ public class PriceTrackerService {
 
 	@Autowired
 	private CoinDataClient client;
+	
+	@Autowired
+	private TriggerService triggerService;
 
 	@PostConstruct
 	private void init() {
@@ -44,12 +47,14 @@ public class PriceTrackerService {
 	@Scheduled(fixedDelay = 300000, initialDelay = 300000)
 	public void getData() {
 		Map<String, Coin> data = client.getCoinData();
+		Map<String, Double[]> pctChange = new HashMap<>();
 		for (String coin : coins) {
 			double newPrice = data.get(coin).getUsd();
 			log.info(coin + ": " + newPrice);
 			double percentChange = ((newPrice - priceMaps.get(1).get(coin)) / priceMaps.get(1).get(coin)) * 100;
 			double percentChange2 = ((newPrice - priceMaps.get(2).get(coin)) / priceMaps.get(2).get(coin)) * 100;
 			double percentChange3 = ((newPrice - priceMaps.get(3).get(coin)) / priceMaps.get(3).get(coin)) * 100;
+			pctChange.put(coin, new Double[] {percentChange, percentChange2, percentChange3});
 
 			log.info(coin + " 5min: " + priceMaps.get(1).get(coin));
 			log.info(coin + " 10min: " + priceMaps.get(2).get(coin));
@@ -63,6 +68,8 @@ public class PriceTrackerService {
 			priceMaps.get(2).put(coin, priceMaps.get(1).get(coin));
 			priceMaps.get(1).put(coin, newPrice);
 		}
+		
+		triggerService.checkTriggers(pctChange);
 	}
 
 }

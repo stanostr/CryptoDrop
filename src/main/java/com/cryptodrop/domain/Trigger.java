@@ -21,6 +21,8 @@ import lombok.NoArgsConstructor;
 public class Trigger {
 	@Id
 	private long id;
+	
+	private String coin;
 
 	@Column(name = "freq")
 	private int frequency;
