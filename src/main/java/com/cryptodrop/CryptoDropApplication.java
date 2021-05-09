@@ -1,0 +1,13 @@
+package com.cryptodrop;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class CryptoDropApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(CryptoDropApplication.class, args);
+	}
+
+}
